@@ -21,12 +21,15 @@ namespace TabloidCLI.UserInterfaceManagers
         {
             Console.WriteLine("Post Manager");
             Console.WriteLine(" 1) Add Post");
+            Console.WriteLine(" 2) List Posts");
             Console.Write("> ");
             string choice = Console.ReadLine();
             switch (choice)
             {
                 case "1":
                     Add();
+                    return this;
+                case "2":
                     return this;
                 default:
                     Console.WriteLine("Invalid Selection");
