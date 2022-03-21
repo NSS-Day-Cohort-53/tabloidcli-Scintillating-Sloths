@@ -50,6 +50,11 @@ namespace TabloidCLI.UserInterfaceManagers
             AuthorManager authMan = new AuthorManager(this, _connectionString);
             post.Author = authMan.Choose();
 
+            post.Blog = new Blog()
+            {
+                Id = 1
+            };
+
             _postRepository.Insert(post);
         }
     }
