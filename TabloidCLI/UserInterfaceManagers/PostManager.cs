@@ -23,6 +23,7 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine("Post Manager");
             Console.WriteLine(" 1) Add Post");
             Console.WriteLine(" 2) List Posts");
+            Console.WriteLine(" 3) Delete Post");
             Console.WriteLine(" 0) Go Back");
             Console.Write("> ");
             string choice = Console.ReadLine();
@@ -36,6 +37,9 @@ namespace TabloidCLI.UserInterfaceManagers
                 case "2":
                     List();
                     return this;
+                case "3":
+                    Delete();
+                    return this;
                 default:
                     Console.WriteLine("Invalid Selection");
                     return this;
@@ -48,6 +52,36 @@ namespace TabloidCLI.UserInterfaceManagers
             {
                 Console.WriteLine($"{post.Title} ({post.Url})");
             }    
+        }
+        public Post Choose(string prompt = null)
+        {
+            if (prompt == null)
+            {
+                prompt = "Please choose a Post:";
+            }
+
+            Console.WriteLine(prompt);
+
+            List<Post> posts = _postRepository.GetAll();
+
+            for (int i = 0; i < posts.Count; i++)
+            {
+                Post post = posts[i];
+                Console.WriteLine($" {i + 1}) {post.Title}");
+            }
+            Console.Write("> ");
+
+            string input = Console.ReadLine();
+            try
+            {
+                int choice = int.Parse(input);
+                return posts[choice - 1];
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Invalid Selection");
+                return null;
+            }
         }
         private void Add()
         {
@@ -70,6 +104,14 @@ namespace TabloidCLI.UserInterfaceManagers
             post.Blog = blogMan.Choose();
 
             _postRepository.Insert(post);
+        }
+        private void Delete()
+        {
+            Post postBeingDeleted = Choose("Which post would you like to delete?");
+            if (postBeingDeleted != null)
+            {
+                _postRepository.Delete(postBeingDeleted.Id);
+            }
         }
     }
 }
