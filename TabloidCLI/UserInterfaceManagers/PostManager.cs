@@ -26,6 +26,7 @@ namespace TabloidCLI.UserInterfaceManagers
             switch (choice)
             {
                 case "1":
+                    Add();
                     return this;
                 default:
                     Console.WriteLine("Invalid Selection");
