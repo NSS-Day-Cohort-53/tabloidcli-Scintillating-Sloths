@@ -23,10 +23,13 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine("Post Manager");
             Console.WriteLine(" 1) Add Post");
             Console.WriteLine(" 2) List Posts");
+            Console.WriteLine(" 0) Go Back");
             Console.Write("> ");
             string choice = Console.ReadLine();
             switch (choice)
             {
+                case "0":
+                    return _parentUI;
                 case "1":
                     Add();
                     return this;
