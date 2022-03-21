@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TabloidCLI.Repositories;
+using TabloidCLI.Models;
 
 namespace TabloidCLI.UserInterfaceManagers
 {
@@ -22,8 +23,118 @@ namespace TabloidCLI.UserInterfaceManagers
 
         public IUserInterfaceManager Execute()
         {
-            Console.WriteLine("Greetings worm");
-            return this;
+            Console.WriteLine("Blog Menu");
+            Console.WriteLine(" 1) List all blogs");
+            Console.WriteLine(" 2) Add a blog");
+            Console.WriteLine(" 3) Edit a blog");
+            Console.WriteLine(" 4) Remove a blog");
+            Console.WriteLine(" 0) Go Back");
+
+            Console.Write("> ");
+            string choice = Console.ReadLine();
+            switch (choice)
+            {
+                case "0":
+                    return _parentUI;
+                case "1":
+                    List();
+                    return this;
+                case "2":
+                    Add();
+                    return this;
+                case "3":
+                    Edit();
+                    return this;
+                case "4":
+                    Remove();
+                    return this;
+                default:
+                    Console.WriteLine("Invalid Selection");
+                    return this;
+            }
+         }
+        private void List()
+        {
+            List<Blog> blogs = _blogRepository.GetAll();
+            foreach (Blog blog in blogs)
+            {
+                Console.WriteLine(blog);
+            }
+        }
+        private Blog Choose(string prompt = null)
+        {
+            if (prompt == null)
+            {
+                prompt = "Please choose a blog:";
+            }
+
+            Console.WriteLine(prompt);
+
+            List<Blog> blogs = _blogRepository.GetAll();
+
+            for (int i = 0; i < blogs.Count; i++)
+            {
+                Blog blog = blogs[i];
+                Console.WriteLine($" {i + 1}) {blog.Title}");
+            }
+            Console.Write("> ");
+
+            string input = Console.ReadLine();
+            try
+            {
+                int choice = int.Parse(input);
+                return blogs[choice - 1];
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Invalid Selection");
+                return null;
+            }
+        }
+        private void Add()
+        {
+            Console.WriteLine("New blog");
+            Blog blog = new Blog();
+
+            Console.Write("Title: ");
+            blog.Title = Console.ReadLine();
+
+            Console.Write("Url: ");
+            blog.Url = Console.ReadLine();
+
+            _blogRepository.Insert(blog);
+        }
+        private void Edit()
+        {
+            Blog blogToEdit = Choose("Which blog would you like to edit?");
+            if (blogToEdit == null)
+            {
+                return;
+            }
+
+            Console.WriteLine();
+            Console.Write("New Title (blank to leave unchanged): ");
+            string title = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(title))
+            {
+                blogToEdit.Title = title;
+            }
+            Console.Write("New URL (blank to leave unchanged): ");
+            string url = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(url))
+            {
+                blogToEdit.Url = url;
+            }
+
+            _blogRepository.Update(blogToEdit);
+        }
+        private void Remove()
+        {
+            Blog blogToDelete = Choose("Which blog would you like to remove?");
+            if (blogToDelete != null)
+            {
+                _blogRepository.Delete(blogToDelete.Id);
+            }
         }
     }
 }
