@@ -107,7 +107,11 @@ namespace TabloidCLI.UserInterfaceManagers
         }
         private void Delete()
         {
-
+            Post postBeingDeleted = Choose("Which post would you like to delete?");
+            if (postBeingDeleted != null)
+            {
+                _postRepository.Delete(postBeingDeleted.Id);
+            }
         }
     }
 }
