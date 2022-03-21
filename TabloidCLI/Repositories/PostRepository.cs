@@ -157,15 +157,17 @@ namespace TabloidCLI.Repositories
                 {
                     cmd.CommandText = @"UPDATE Post
                                         SET Title = @title,
-                                            URL = @url
-                                            PublishDateTime = @date
-                                            AuthorId = @authorId
-                                            BlogId = @blogId";
+                                            URL = @url,
+                                            PublishDateTime = @date,
+                                            AuthorId = @authorId,
+                                            BlogId = @blogId
+                                        WHERE id = @id";
                     cmd.Parameters.AddWithValue("@title", post.Title);
                     cmd.Parameters.AddWithValue("@url", post.Url);
                     cmd.Parameters.AddWithValue("@date", post.PublishDateTime);
                     cmd.Parameters.AddWithValue("@authorId", post.Author.Id);
                     cmd.Parameters.AddWithValue("@blogId", post.Blog.Id);
+                    cmd.Parameters.AddWithValue("@id", post.Id);
 
                     cmd.ExecuteNonQuery();
                 }

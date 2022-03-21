@@ -42,6 +42,7 @@ namespace TabloidCLI.UserInterfaceManagers
                     Delete();
                     return this;
                 case "4":
+                    Edit();
                     return this;
                 default:
                     Console.WriteLine("Invalid Selection");
@@ -131,9 +132,10 @@ namespace TabloidCLI.UserInterfaceManagers
             }
             Console.Write("New publish date (blank to leave unchanged: ");
             string stringDate = Console.ReadLine();
-            DateTime date = DateTime.Parse(stringDate);
+            
             if (!string.IsNullOrWhiteSpace(stringDate))
             {
+                DateTime date = DateTime.Parse(stringDate);
                 postToEdit.PublishDateTime = date;
             }
             AuthorManager authMan = new AuthorManager(this, _connectionString);
