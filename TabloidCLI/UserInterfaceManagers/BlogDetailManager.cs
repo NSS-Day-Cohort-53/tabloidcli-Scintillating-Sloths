@@ -5,7 +5,7 @@ using TabloidCLI.Repositories;
 
 namespace TabloidCLI.UserInterfaceManagers
 {
-    public class BlogDetailManager
+    public class BlogDetailManager : IUserInterfaceManager
     {
         private IUserInterfaceManager _parentUI;
         private BlogRepository _blogRepository;
