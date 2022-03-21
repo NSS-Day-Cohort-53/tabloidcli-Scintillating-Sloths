@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using TabloidCLI.Repositories;
 using TabloidCLI.Models;
 
@@ -21,17 +22,32 @@ namespace TabloidCLI.UserInterfaceManagers
         {
             Console.WriteLine("Post Manager");
             Console.WriteLine(" 1) Add Post");
+            Console.WriteLine(" 2) List Posts");
+            Console.WriteLine(" 0) Go Back");
             Console.Write("> ");
             string choice = Console.ReadLine();
             switch (choice)
             {
+                case "0":
+                    return _parentUI;
                 case "1":
                     Add();
+                    return this;
+                case "2":
+                    List();
                     return this;
                 default:
                     Console.WriteLine("Invalid Selection");
                     return this;
             }
+        }
+        private void List()
+        {
+            List<Post> posts = _postRepository.GetAll();
+            foreach (Post post in posts)
+            {
+                Console.WriteLine($"{post.Title} ({post.Url})");
+            }    
         }
         private void Add()
         {
