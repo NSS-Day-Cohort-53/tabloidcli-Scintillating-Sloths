@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TabloidCLI.Repositories;
 
 namespace TabloidCLI.UserInterfaceManagers
@@ -22,8 +18,19 @@ namespace TabloidCLI.UserInterfaceManagers
 
         public IUserInterfaceManager Execute()
         {
-            Console.WriteLine("Greetings worm");
-            return this;
+            Console.WriteLine("Post Manager");
+            Console.WriteLine(" 1) Add Post");
+            Console.Write("> ");
+            string choice = Console.ReadLine();
+            switch (choice)
+            {
+                case "1":
+                    List();
+                    return this;
+                default:
+                    Console.WriteLine("Invalid Selection");
+                    return this;
+            }
         }
     }
 }
