@@ -108,6 +108,49 @@ namespace TabloidCLI.UserInterfaceManagers
 
             _postRepository.Insert(post);
         }
+        private void Edit()
+        {
+            Post postToEdit = Choose("Which post would you like to edit?");
+            if (postToEdit == null)
+            {
+                return;
+            }
+
+            Console.WriteLine();
+            Console.Write("New title (blank to leave unchanged: ");
+            string title = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(title))
+            {
+                postToEdit.Title = title;
+            }
+            Console.Write("New URL (blank to leave unchanged: ");
+            string url = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(url))
+            {
+                postToEdit.Url = url;
+            }
+            Console.Write("New publish date (blank to leave unchanged: ");
+            string stringDate = Console.ReadLine();
+            DateTime date = DateTime.Parse(stringDate);
+            if (!string.IsNullOrWhiteSpace(stringDate))
+            {
+                postToEdit.PublishDateTime = date;
+            }
+            AuthorManager authMan = new AuthorManager(this, _connectionString);
+            Author chosenAuthor = authMan.Choose("New author (blank to leave unchanged: ");
+            if (chosenAuthor != null)
+            {
+                postToEdit.Author = chosenAuthor;
+            }
+            BlogManager blogMan = new BlogManager(this, _connectionString);
+            Blog chosenBlog = blogMan.Choose("New blog (blank to leave unchanged: ");
+            if (chosenBlog != null)
+            {
+                postToEdit.Blog = chosenBlog;
+            }
+
+            _postRepository.Update(postToEdit);
+        }
         private void Delete()
         {
             Post postBeingDeleted = Choose("Which post would you like to delete?");
