@@ -1,5 +1,6 @@
 ﻿using System;
 using TabloidCLI.Repositories;
+using TabloidCLI.Models;
 
 namespace TabloidCLI.UserInterfaceManagers
 {
@@ -25,12 +26,30 @@ namespace TabloidCLI.UserInterfaceManagers
             switch (choice)
             {
                 case "1":
-                    List();
                     return this;
                 default:
                     Console.WriteLine("Invalid Selection");
                     return this;
             }
+        }
+        private void Add()
+        {
+            Console.WriteLine("New Post");
+            Post post = new Post();
+
+            Console.Write("Title: ");
+            post.Title = Console.ReadLine();
+
+            Console.Write("URL: ");
+            post.Url = Console.ReadLine();
+
+            Console.Write("Publish Date: ");
+            post.PublishDateTime = DateTime.Parse(Console.ReadLine());
+
+            AuthorManager authMan = new AuthorManager(this, _connectionString);
+            post.Author = authMan.Choose();
+
+            _postRepository.Insert(post);
         }
     }
 }
