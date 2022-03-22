@@ -50,7 +50,21 @@ namespace TabloidCLI.UserInterfaceManagers
         }
         private void Add()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("New Note");
+            Note note = new Note();
+
+            Console.Write("Title: ");
+            note.Title = Console.ReadLine();
+
+            Console.Write("Content: ");
+            note.Content = Console.ReadLine();
+
+            note.CreateDateTime = DateTime.Now;
+
+            PostManager postMan = new PostManager(this, _connectionString);
+            note.Post = postMan.Choose("Please select a post: ");
+
+            _noteRepository.Insert(note);
         }
         private void Remove()
         {
