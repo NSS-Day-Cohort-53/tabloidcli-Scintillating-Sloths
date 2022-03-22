@@ -25,6 +25,7 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine(" 2) List Posts");
             Console.WriteLine(" 3) Delete Post");
             Console.WriteLine(" 4) Edit Post");
+            Console.WriteLine(" 5) Post Details");
             Console.WriteLine(" 0) Go Back");
             Console.Write("> ");
             string choice = Console.ReadLine();
@@ -44,6 +45,16 @@ namespace TabloidCLI.UserInterfaceManagers
                 case "4":
                     Edit();
                     return this;
+                case "5":
+                    Post post = Choose();
+                    if (post == null)
+                    {
+                        return this;
+                    }
+                    else
+                    {
+                        return new PostDetailManager(this, _connectionString, post.Id);
+                    }
                 default:
                     Console.WriteLine("Invalid Selection");
                     return this;
