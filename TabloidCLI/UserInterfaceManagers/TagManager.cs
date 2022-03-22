@@ -103,6 +103,20 @@ namespace TabloidCLI.UserInterfaceManagers
         private void Edit()
         {
             Tag tagToEdit = Choose("Which tag would you like to edit?");
+            if (tagToEdit == null)
+            {
+                return;
+            }
+
+            Console.WriteLine();
+            Console.Write("New name (blank to leave unchanged: ");
+            string name = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                tagToEdit.Name = name;
+            }
+
+            _tagRepository.Update(tagToEdit);
         }
 
         private void Remove()
