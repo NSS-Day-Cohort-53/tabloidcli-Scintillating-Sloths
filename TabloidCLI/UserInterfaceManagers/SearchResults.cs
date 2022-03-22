@@ -30,7 +30,6 @@ namespace TabloidCLI.UserInterfaceManagers
             {
                 Console.WriteLine(" " + result);
             }
-
             Console.WriteLine();
         }
     }
