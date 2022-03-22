@@ -63,7 +63,10 @@ namespace TabloidCLI.UserInterfaceManagers
 
             note.CreateDateTime = DateTime.Now;
 
-            note.Post.Id = _postId;
+            note.Post = new Post()
+            {
+                Id = _postId
+            };
 
             _noteRepository.Insert(note);
         }
