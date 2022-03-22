@@ -107,7 +107,7 @@ namespace TabloidCLI.UserInterfaceManagers
         }
         private void Remove()
         {
-            Note noteToDelete = Choose("Which note would you like to remove?");
+            Note noteToDelete = Choose();
             if (noteToDelete != null)
             {
                 _noteRepository.Delete(noteToDelete.Id);
