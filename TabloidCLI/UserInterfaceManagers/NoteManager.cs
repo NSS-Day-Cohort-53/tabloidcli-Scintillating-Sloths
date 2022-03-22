@@ -31,7 +31,7 @@ namespace TabloidCLI.UserInterfaceManagers
             switch (choice)
             {
                 case "1":
-                    List();
+                    List(_postId);
                     return this;
                 case "2":
                     Add();
@@ -46,9 +46,13 @@ namespace TabloidCLI.UserInterfaceManagers
                     return this;
             }
         }
-        private void List()
+        private void List(int postId)
         {
-            throw new NotImplementedException();
+            List<Note> notes = _noteRepository.ObtainNotes(postId);
+            foreach (Note note in notes)
+            {
+                Console.WriteLine($"{note.Title}: {note.Content}");
+            }
         }
         private void Add()
         {

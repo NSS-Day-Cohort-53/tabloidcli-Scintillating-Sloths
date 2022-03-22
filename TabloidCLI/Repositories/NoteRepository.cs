@@ -16,6 +16,7 @@ namespace TabloidCLI
         public Note Get(int id)
         {
             throw new NotImplementedException();
+
         }
         public void Insert (Note note)
         {
@@ -50,6 +51,40 @@ namespace TabloidCLI
                     cmd.Parameters.AddWithValue("@id", id);
 
                     cmd.ExecuteNonQuery();
+                }
+            }
+        }
+        public List<Note> ObtainNotes(int postId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT id,
+                                               Title,
+                                               Content
+                                          FROM Note
+                                          WHERE PostId = @id";
+                    cmd.Parameters.AddWithValue("@id", postId);
+
+                    List<Note> notes = new List<Note>();
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Note note = new Note()
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            Title = reader.GetString(reader.GetOrdinal("Title")),
+                            Content = reader.GetString(reader.GetOrdinal("Content")),
+                        };
+                        notes.Add(note);
+                    }
+
+                    reader.Close();
+
+                    return notes;
                 }
             }
         }
