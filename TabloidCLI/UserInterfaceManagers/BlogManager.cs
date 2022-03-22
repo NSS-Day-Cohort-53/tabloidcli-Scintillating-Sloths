@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TabloidCLI.Repositories;
 using TabloidCLI.Models;
 
@@ -30,7 +27,6 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine(" 4) Remove a blog");
             Console.WriteLine(" 5) Blog Details");
             Console.WriteLine(" 0) Go Back");
-
             Console.Write("> ");
             string choice = Console.ReadLine();
             switch (choice)
