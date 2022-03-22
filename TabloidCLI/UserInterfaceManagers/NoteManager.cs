@@ -84,7 +84,7 @@ namespace TabloidCLI.UserInterfaceManagers
 
             Console.WriteLine(prompt);
 
-            List<Note> notes = _noteRepository.GetAll();
+            List<Note> notes = _noteRepository.ObtainNotes(_postId);
 
             for (int i = 0; i < notes.Count; i++)
             {
@@ -107,7 +107,7 @@ namespace TabloidCLI.UserInterfaceManagers
         }
         private void Remove()
         {
-            Note noteToDelete = Choose();
+            Note noteToDelete = Choose("");
             if (noteToDelete != null)
             {
                 _noteRepository.Delete(noteToDelete.Id);
