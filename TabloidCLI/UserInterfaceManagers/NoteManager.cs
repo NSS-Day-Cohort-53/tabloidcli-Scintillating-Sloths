@@ -46,7 +46,11 @@ namespace TabloidCLI.UserInterfaceManagers
         }
         private void List()
         {
-            throw new NotImplementedException();
+            List<Note> notes = _noteRepository.GetAll();
+            foreach (Note note in notes)
+            {
+                Console.WriteLine($"{note.Title}: {note.Content}");
+            }
         }
         private void Add()
         {
