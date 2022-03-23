@@ -158,7 +158,7 @@ namespace TabloidCLI.UserInterfaceManagers
             {
                 try
                 {
-                    Console.Write("New publish date (blank to leave unchanged: ");
+                    Console.Write("New publish date (mm/dd/yyy) (blank to leave unchanged: ");
                     string stringDate = Console.ReadLine();
 
                     if (!string.IsNullOrWhiteSpace(stringDate))
