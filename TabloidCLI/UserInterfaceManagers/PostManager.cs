@@ -66,7 +66,7 @@ namespace TabloidCLI.UserInterfaceManagers
             foreach (Post post in posts)
             {
                 Console.WriteLine($"{post.Title} ({post.Url})");
-            }    
+            }
         }
         public Post Choose(string prompt = null)
         {
@@ -109,8 +109,20 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.Write("URL: ");
             post.Url = Console.ReadLine();
 
-            Console.Write("Publish Date: ");
-            post.PublishDateTime = DateTime.Parse(Console.ReadLine());
+            bool properDate = false;
+            while (!properDate)
+            {
+                try
+                {
+                    Console.Write("Publish Date (mm/dd/yyyy): ");
+                    post.PublishDateTime = DateTime.Parse(Console.ReadLine());
+                    properDate = true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Invalid Date Format");
+                }
+            }
 
             AuthorManager authMan = new AuthorManager(this, _connectionString);
             post.Author = authMan.Choose();
@@ -141,13 +153,25 @@ namespace TabloidCLI.UserInterfaceManagers
             {
                 postToEdit.Url = url;
             }
-            Console.Write("New publish date (blank to leave unchanged: ");
-            string stringDate = Console.ReadLine();
-            
-            if (!string.IsNullOrWhiteSpace(stringDate))
+            bool properDate = false;
+            while (!properDate)
             {
-                DateTime date = DateTime.Parse(stringDate);
-                postToEdit.PublishDateTime = date;
+                try
+                {
+                    Console.Write("New publish date (mm/dd/yyy) (blank to leave unchanged: ");
+                    string stringDate = Console.ReadLine();
+
+                    if (!string.IsNullOrWhiteSpace(stringDate))
+                    {
+                        DateTime date = DateTime.Parse(stringDate);
+                        postToEdit.PublishDateTime = date;
+                    }
+                    properDate = true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Invalid Date Format");
+                }
             }
             AuthorManager authMan = new AuthorManager(this, _connectionString);
             Author chosenAuthor = authMan.Choose("New author (blank to leave unchanged: ");
